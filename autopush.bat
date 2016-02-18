@@ -10,10 +10,14 @@ cd %localPath%
 
 @echo on
 @echo Checking local apk folder
-@echo off
-if not exist %localApkPath% md %localApkPath%
+
+@if not exist %localApkPath% md %localApkPath%
 @echo on
 copy %totalPath% apks\ /Y
+
+@git commit -a -m "update apks"
+
+@git push
 
 echo.&pause
 exit
