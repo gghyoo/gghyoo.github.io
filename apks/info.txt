@@ -1,2 +1,2 @@
-app.gavin.carpathrecorder_debug@(v1.0.4-3-g2214215_17_20160218183904)
-app.gavin.carpathrecorder_release@(v1.0.4-3-g2214215_17_20160218183904)
+app.gavin.carpathrecorder_debug@1.0.5_18_20160218202617
+app.gavin.carpathrecorder_release@1.0.5_18_20160218202617
