@@ -67,7 +67,7 @@ rdb.addEventListener("click", function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200){
         var html = "<b>raw date len: </b>" + xmlhttp.response.byteLength + "<br>";
         var out = decode(xmlhttp.response);
-        html += "<b>uncompressed len: </b>" + out.length();
+        html += "<b>uncompressed len: </b>" + out.length;
         html += "<b>uncompressed data: </b>" + out;
         result_dis.innerHTML = html;
       }
