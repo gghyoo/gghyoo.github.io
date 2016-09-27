@@ -41,17 +41,23 @@ function decode(ab)
 <div id="result">Result</div>
   
 <script>
+var rdb = document.getElementById("read_button");
+var result_dis = document.getElementById("result");
+
 window.onload = function () {
   f.onchange = function (e) {
     var fr = new FileReader;
     fr.readAsArrayBuffer(e.target.files[0]);
     fr.onload = function () {
-      result.innerHTML = decode(fr.result);
+      var html = "<b>raw date len: </b>" + fr.result.byteLength + "<br>";
+      var out = decode(fr.result);
+      html += "<b>uncompressed len: </b>" + out.length();
+      html += "<b>uncompressed data: </b>" + out;
+      result_dis.innerHTML = html;
     }
   };  
 };
-var rdb = document.getElementById("read_button");
-var result_dis = document.getElementById("result");
+
 rdb.addEventListener("click", function(){
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.responseType = 'arraybuffer'
@@ -59,7 +65,11 @@ rdb.addEventListener("click", function(){
     xmlhttp.send();
     xmlhttp.onreadystatechange=function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200){
-        result_dis.innerHTML = decode(xmlhttp.response);
+        var html = "<b>raw date len: </b>" + fr.result.byteLength + "<br>";
+        var out = decode(xmlhttp.response);
+        html += "<b>uncompressed len: </b>" + out.length();
+        html += "<b>uncompressed data: </b>" + out;
+        result_dis.innerHTML = html;
       }
     }    
   });
