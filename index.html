@@ -1,1 +1,68 @@
-hello world!
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>lz4.js bench</title>
+<script type="text/javascript" src="lz4.js"></script>
+<script type="text/javascript">
+// Nodejs-like Buffer built-in
+var Buffer = require('buffer').Buffer
+var LZ4 = require('lz4')
+var uncompressed = new Buffer(1024*1024);
+
+
+function decode(ab)
+{
+    var s = new Buffer(ab);
+    console.log("compressed size:" + s.length);
+    
+    var uncompressedSize = LZ4.decodeBlock(s, uncompressed);
+    console.log("uncompressed size:" + uncompressedSize);
+    var out = "error";
+    
+    if(uncompressedSize > 0){
+        out = new Buffer(uncompressedSize);
+        for(var i = 0 ; i < uncompressedSize ; i ++)
+          out[i] = uncompressed[i];
+    }
+
+    return out.toString("utf-8");
+}
+
+</script>
+</head>
+<body>
+<button id="read_button">从服务器获取文件</button>
+
+  <div>
+    <input type="file" id="f">
+    
+  </div>
+<div id="result">Result</div>
+  
+<script>
+window.onload = function () {
+  f.onchange = function (e) {
+    var fr = new FileReader;
+    fr.readAsArrayBuffer(e.target.files[0]);
+    fr.onload = function () {
+      result.innerHTML = decode(fr.result);
+    }
+  };  
+};
+var rdb = document.getElementById("read_button");
+var result_dis = document.getElementById("result");
+rdb.addEventListener("click", function(){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.responseType = 'arraybuffer'
+    xmlhttp.open("GET","lz4.dat",true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange=function(){
+      if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        result_dis.innerHTML = decode(xmlhttp.response);
+      }
+    }    
+  });
+</script>
+</body>
+</html>
