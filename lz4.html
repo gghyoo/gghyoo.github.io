@@ -7,35 +7,37 @@
 // Nodejs-like Buffer built-in
 var Buffer = require('buffer').Buffer
 var LZ4 = require('lz4')
+var uncompressed = new Buffer(1024*1024);
 
 function decode(ab)
 {
     var s = new Buffer(ab);
     console.log("compressed size:" + s.length);
-    var uncompressed = new Buffer(1);
+    
     var uncompressedSize = LZ4.decodeBlock(s, uncompressed);
-    uncompressed = new Buffer(uncompressedSize);
-    uncompressedSize = LZ4.decodeBlock(s, uncompressed);
     console.log("uncompressed size:" + uncompressedSize);
-    return uncompressed.toString("utf-8");
+    var out = uncompressed.slice(0, uncompressedSize);
+    return out.toString("utf-8");
 }
 
 </script>
 </head>
 <body>
+<a href="#" id="rd">dddd</a>
+
   <div>
     <input type="file" id="f">
-    <div id="result"></div>
+    
   </div>
-
-  <a href="#" id="rd"></a>
+<div id="result">Result</div>
+  
 <script>
 window.onload = function () {
   f.onchange = function (e) {
     var fr = new FileReader;
     fr.readAsArrayBuffer(e.target.files[0]);
     fr.onload = function () {
-	     console.log( "uncompressed data: ", decode(fr.result));
+      result.innerHTML = decode(fr.result);
     }
   };
 
