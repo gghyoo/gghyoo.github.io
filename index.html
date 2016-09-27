@@ -10,7 +10,6 @@ var Buffer = require('buffer').Buffer
 var LZ4 = require('lz4')
 var uncompressed = new Buffer(1024*1024);
 
-
 function decode(ab)
 {
     var s = new Buffer(ab);
@@ -51,7 +50,7 @@ window.onload = function () {
     fr.onload = function () {
       var html = "<b>raw date len: </b>" + fr.result.byteLength + "<br>";
       var out = decode(fr.result);
-      html += "<b>uncompressed len: </b>" + out.length();
+      html += "<b>uncompressed len: </b>" + out.length + "<br>";
       html += "<b>uncompressed data: </b>" + out;
       result_dis.innerHTML = html;
     }
@@ -67,7 +66,7 @@ rdb.addEventListener("click", function(){
       if (xmlhttp.readyState==4 && xmlhttp.status==200){
         var html = "<b>raw date len: </b>" + xmlhttp.response.byteLength + "<br>";
         var out = decode(xmlhttp.response);
-        html += "<b>uncompressed len: </b>" + out.length;
+        html += "<b>uncompressed len: </b>" + out.length + "<br>";
         html += "<b>uncompressed data: </b>" + out;
         result_dis.innerHTML = html;
       }
