@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+  <title>lz4.js bench</title>
+<script type="text/javascript" src="lz4.js"></script>
+<script type="text/javascript">
+// Nodejs-like Buffer built-in
+var Buffer = require('buffer').Buffer
+var LZ4 = require('lz4')
+
+function decode(ab)
+{
+    var s = new Buffer(ab);
+    console.log("compressed size:" + s.length);
+    var uncompressed = new Buffer(1);
+    var uncompressedSize = LZ4.decodeBlock(s, uncompressed);
+    uncompressed = new Buffer(uncompressedSize);
+    uncompressedSize = LZ4.decodeBlock(s, uncompressed);
+    console.log("uncompressed size:" + uncompressedSize);
+    return uncompressed.toString("utf-8");
+}
+
+</script>
+</head>
+<body>
+  <div>
+    <input type="file" id="f">
+    <div id="result"></div>
+  </div>
+
+  <a href="#" id="rd"></a>
+<script>
+window.onload = function () {
+  f.onchange = function (e) {
+    var fr = new FileReader;
+    fr.readAsArrayBuffer(e.target.files[0]);
+    fr.onload = function () {
+	     console.log( "uncompressed data: ", decode(fr.result));
+    }
+  };
+
+  rd.onclick = function(){
+    xmlhttp.onreadystatechange=function()
+   {
+    var xmlhttp = new XMLHttpRequest2();
+    xmlhttp.onreadystatechange=function(){
+      if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        console.log( "uncompressed data: ", decode(xmlhttp.response));
+      }
+    }
+    xmlhttp.open("GET","lz4.dat",true);
+    xmlhttp.send();
+  }
+  }
+};
+</script>
+</body>
+</html>

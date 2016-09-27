@@ -1,2 +1,0 @@
-app.gavin.carpathrecorder_debug@1.0.7-dirty_19_20160219133150
-app.gavin.carpathrecorder_release@1.0.7-dirty_19_20160219133150
